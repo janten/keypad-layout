@@ -1,5 +1,5 @@
 # Keypad Layout
-Control window layout using Ctrl + Numeric Keypad on macOS. Press two number keys in a row while holding down Ctrl to select the new window frame.
+Control window layout using Ctrl + Numeric Keypad on macOS. Press two number keys in a row while holding down Ctrl to select the new window frame on a 3x3 grid.
 
 ![ezgif-1-57056b486e](https://cloud.githubusercontent.com/assets/1794407/23961259/ac928d3c-09aa-11e7-9694-4c995639d254.gif)
 
