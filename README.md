@@ -27,4 +27,4 @@ If you use a MacBook and forgot the layout of the numeric keypad, refer to the t
     ╚═══╩═══╩═══╝
 
 ## Attributions
-The application and menu bar icons are derived from [numpad](https://thenounproject.com/term/numpad/801826/) by [Ján Slobodník](https://thenounproject.com/janslobodnik/) from the [Noun Project](https://thenounproject.com/).
+The application and menu bar icons are derived from [numpad](https://thenounproject.com/term/numpad/801826/) by [Ján Slobodník](https://thenounproject.com/janslobodnik/) from the [Noun Project](https://thenounproject.com/), available under the [Creative Commons Attribution](https://creativecommons.org/licenses/by/3.0/us/) license.
