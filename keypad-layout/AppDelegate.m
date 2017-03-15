@@ -10,6 +10,7 @@
 
 @interface AppDelegate ()
 @property NSStatusItem *statusItem;
+@property NSRect rect;
 @end
 
 @implementation AppDelegate
@@ -45,7 +46,7 @@
 }
 
 - (void)installHotkeys {
-	CGEventMask interestedEvents = CGEventMaskBit(kCGEventKeyDown);
+	CGEventMask interestedEvents = CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged);
 	CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, interestedEvents, hotkeyCallback, (__bridge void * _Nullable)(self));
 	CFRunLoopSourceRef source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
 	CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
@@ -53,9 +54,16 @@
 
 CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon) {
 	CGEventFlags flags = CGEventGetFlags(event);
+	AppDelegate *self = (__bridge AppDelegate *)refcon;
 	
 	if (!(flags & kCGEventFlagMaskControl)) {
-		return event;
+
+		if ((type == kCGEventFlagsChanged) && !NSEqualRects(self.rect, NSZeroRect)) {
+			self.rect = NSZeroRect;
+			return NULL;
+		} else {
+			return event;
+		}
 	}
 	
 	if (type == NX_KEYDOWN) {
@@ -67,7 +75,7 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 		char chars[2] = {characters[0], 0};
 		
 		if (strstr("123456789", chars)) {
-			[(__bridge id)refcon handleHotkeyChar:chars[0]];
+			[self handleHotkeyChar:chars[0]];
 			return NULL;
 		}
 		
@@ -77,60 +85,59 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 	return event;
 }
 
-- (void)handleHotkeyChar:(char)c {
+- (NSRect)rectForCoordinateX:(CGFloat)x Y:(CGFloat)y {
 	NSScreen *screen = [NSScreen mainScreen];
-	NSRect workingRect = screen.frame;
-	workingRect.size = screen.visibleFrame.size;
-	workingRect.origin.y = screen.frame.origin.y + (screen.frame.size.height - screen.visibleFrame.size.height);
-	CGFloat w = floor(workingRect.size.width/3.0);
-	CGFloat h = floor(workingRect.size.height/3.0);
-	CGFloat x = floor(workingRect.origin.x);
-	CGFloat y = floor(workingRect.origin.y);
+	NSRect workingRect = screen.visibleFrame;
+	workingRect.origin.y = (screen.frame.size.height - screen.visibleFrame.size.height) - screen.visibleFrame.origin.y;
+	CGFloat w = workingRect.size.width/3.0;
+	CGFloat h = workingRect.size.height/3.0;
+	CGFloat a = workingRect.origin.x;
+	CGFloat b = workingRect.origin.y;
+	NSRect rect = NSMakeRect(a + x * w, b + y * h, w, h);
+	rect = NSInsetRect(rect, 1, 1);
+	return rect;
+}
+
+- (void)handleHotkeyChar:(char)c {
 	NSRect rect = NSZeroRect;
 	
 	switch (c) {
 		case '7':
-			rect = NSMakeRect(x + 0 * 2, y + 0 * h, w, h);
+			rect = [self rectForCoordinateX:0 Y:0];
 			break;
 		case '8':
-			rect = NSMakeRect(x + 1 * w, y + 0 * h, w, h);
+			rect = [self rectForCoordinateX:1 Y:0];
 			break;
 		case '9':
-			rect = NSMakeRect(x + 2 * w, y + 0 * h, w, h);
+			rect = [self rectForCoordinateX:2 Y:0];
 			break;
 		case '4':
-			rect = NSMakeRect(x + 0 * 2, y + 1 * h, w, h);
+			rect = [self rectForCoordinateX:0 Y:1];
 			break;
 		case '5':
-			rect = NSMakeRect(x + 1 * w, y + 1 * h, w, h);
+			rect = [self rectForCoordinateX:1 Y:1];
 			break;
 		case '6':
-			rect = NSMakeRect(x + 2 * w, y + 1 * h, w, h);
+			rect = [self rectForCoordinateX:2 Y:1];
 			break;
 		case '1':
-			rect = NSMakeRect(x + 0 * 2, y + 2 * h, w, h);
+			rect = [self rectForCoordinateX:0 Y:2];
 			break;
 		case '2':
-			rect = NSMakeRect(x + 1 * w, y + 2 * h, w, h);
+			rect = [self rectForCoordinateX:1 Y:2];
 			break;
 		case '3':
-			rect = NSMakeRect(x + 2 * w, y + 2 * h, w, h);
+			rect = [self rectForCoordinateX:2 Y:2];
 			break;
 		default:
 			break;
 	}
 	
-	static NSRect firstRect;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		firstRect = NSZeroRect;
-	});
-
-	if (NSEqualRects(NSZeroRect, firstRect)) {
-		firstRect = rect;
+	if (NSEqualRects(NSZeroRect, self.rect)) {
+		self.rect = rect;
 	} else {
-		rect = NSUnionRect(firstRect, rect);
-		firstRect = NSZeroRect;
+		rect = NSUnionRect(self.rect, rect);
+		self.rect = NSZeroRect;
 		[self setFrontmostWindowFrame:rect];
 	}
 

@@ -28,6 +28,8 @@
 	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2017 Jan-Gerd Tenberge. All rights reserved.</string>
+	<key>NSMainStoryboardFile</key>
+	<string>Storyboard</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

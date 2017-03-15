@@ -10,6 +10,7 @@
 		EE4347521E78371100ECAADF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4347511E78371100ECAADF /* AppDelegate.m */; };
 		EE4347551E78371100ECAADF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4347541E78371100ECAADF /* main.m */; };
 		EE43475A1E78371100ECAADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE4347591E78371100ECAADF /* Assets.xcassets */; };
+		EE5F65CB1E799BAB00020AD2 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE5F65CA1E799BAB00020AD2 /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		EE4347541E78371100ECAADF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EE4347591E78371100ECAADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE43475E1E78371100ECAADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE5F65CA1E799BAB00020AD2 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				EE4347541E78371100ECAADF /* main.m */,
+				EE5F65CA1E799BAB00020AD2 /* Storyboard.storyboard */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -133,6 +136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE43475A1E78371100ECAADF /* Assets.xcassets in Resources */,
+				EE5F65CB1E799BAB00020AD2 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
