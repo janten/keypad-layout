@@ -13,7 +13,7 @@ Control window layout using Ctrl + Numeric Keypad on macOS. Press two number key
 | `8` then `3` | Right Two Thirds |
 
 ## Reference
-If you use a MacBook and forgot the layout of the numeric keypad, refer to the table below for the gird layout.
+If you use a MacBook and forgot the layout of the numeric keypad, refer to the table below for the grid layout.
 
     ╔═══╦═══╦═══╗
     ║ 7 ║ 8 ║ 9 ║
