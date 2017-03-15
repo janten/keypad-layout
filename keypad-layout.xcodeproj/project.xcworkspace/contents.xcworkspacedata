@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:window-key.xcodeproj">
+      location = "self:/Users/janten/Desktop/window-key/keypad-layout.xcodeproj">
    </FileRef>
 </Workspace>

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EE43474C1E78371000ECAADF"
-               BuildableName = "window-key.app"
-               BlueprintName = "window-key"
-               ReferencedContainer = "container:window-key.xcodeproj">
+               BuildableName = "Keypad Layout.app"
+               BlueprintName = "Keypad Layout"
+               ReferencedContainer = "container:keypad-layout.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EE43474C1E78371000ECAADF"
-            BuildableName = "window-key.app"
-            BlueprintName = "window-key"
-            ReferencedContainer = "container:window-key.xcodeproj">
+            BuildableName = "Keypad Layout.app"
+            BlueprintName = "Keypad Layout"
+            ReferencedContainer = "container:keypad-layout.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EE43474C1E78371000ECAADF"
-            BuildableName = "window-key.app"
-            BlueprintName = "window-key"
-            ReferencedContainer = "container:window-key.xcodeproj">
+            BuildableName = "Keypad Layout.app"
+            BlueprintName = "Keypad Layout"
+            ReferencedContainer = "container:keypad-layout.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EE43474C1E78371000ECAADF"
-            BuildableName = "window-key.app"
-            BlueprintName = "window-key"
-            ReferencedContainer = "container:window-key.xcodeproj">
+            BuildableName = "Keypad Layout.app"
+            BlueprintName = "Keypad Layout"
+            ReferencedContainer = "container:keypad-layout.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
