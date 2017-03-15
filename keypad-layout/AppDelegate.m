@@ -86,14 +86,18 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 }
 
 - (NSRect)rectForCoordinateX:(CGFloat)x Y:(CGFloat)y {
+	NSScreen *primaryScreen = [NSScreen screens][0];
 	NSScreen *screen = [NSScreen mainScreen];
-	NSRect workingRect = screen.visibleFrame;
-	workingRect.origin.y = (screen.frame.size.height - screen.visibleFrame.size.height) - screen.visibleFrame.origin.y;
-	CGFloat w = workingRect.size.width/3.0;
-	CGFloat h = workingRect.size.height/3.0;
-	CGFloat a = workingRect.origin.x;
-	CGFloat b = workingRect.origin.y;
-	NSRect rect = NSMakeRect(a + x * w, b + y * h, w, h);
+	CGFloat statusBarHeight = [[[NSApplication sharedApplication] mainMenu] menuBarHeight];
+	CGFloat dockHeight = (screen.frame.size.height - screen.visibleFrame.size.height) - statusBarHeight;
+	NSRect rect = screen.frame;
+	rect.origin.y = -screen.frame.origin.y + (primaryScreen.frame.size.height - screen.frame.size.height) ;
+	rect.origin.y += statusBarHeight;
+	rect.size.height -= statusBarHeight + dockHeight;
+	rect.size.width = rect.size.width / 3.0;
+	rect.size.height = rect.size.height / 3.0;
+	rect.origin.x += x * rect.size.width;
+	rect.origin.y += y * rect.size.height;
 	rect = NSInsetRect(rect, 1, 1);
 	return rect;
 }
@@ -153,14 +157,14 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 		CFRelease(appElem);
 		return;
 	}
+
+	AXValueRef positionValue = AXValueCreate(kAXValueTypeCGPoint, &frame.origin);
+	AXUIElementSetAttributeValue(window, kAXPositionAttribute, positionValue);
+	CFRelease(positionValue);
 	
 	AXValueRef sizeValue = AXValueCreate(kAXValueTypeCGSize, &frame.size);
 	AXUIElementSetAttributeValue(window, kAXSizeAttribute, sizeValue);
 	CFRelease(sizeValue);
-	
-	AXValueRef positionValue = AXValueCreate(kAXValueTypeCGPoint, &frame.origin);
-	AXUIElementSetAttributeValue(window, kAXPositionAttribute, positionValue);
-	CFRelease(positionValue);
 	
 	CFRelease(window);
 	CFRelease(appElem);
