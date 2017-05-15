@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
+@property NSTimer *trustTimer;
 @property NSStatusItem *statusItem;
 @property NSRect rect;
 @end
@@ -17,12 +18,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	NSDictionary *options = @{(__bridge id)kAXTrustedCheckOptionPrompt: @YES};
-	Boolean trusted = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
-
-	if (trusted) {
-		[self installHotkeys];
-	}
-
+	AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
+	[self installHotkeys];
 	[self installStatusBarIcon];
 }
 
@@ -46,10 +43,20 @@
 }
 
 - (void)installHotkeys {
-	CGEventMask interestedEvents = CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged);
-	CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, interestedEvents, hotkeyCallback, (__bridge void * _Nullable)(self));
-	CFRunLoopSourceRef source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
-	CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
+	void (^trustBlock)(NSTimer *) = ^(NSTimer * _Nonnull timer) {
+		NSDictionary *options = @{(__bridge id)kAXTrustedCheckOptionPrompt: @NO};
+		Boolean trusted = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
+
+		if (trusted) {
+			CGEventMask interestedEvents = CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged);
+			CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, interestedEvents, hotkeyCallback, (__bridge void * _Nullable)(self));
+			CFRunLoopSourceRef source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
+			CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
+			[timer invalidate];
+		}
+		
+	};
+	self.trustTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:YES block:trustBlock];
 }
 
 CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon) {
@@ -67,7 +74,6 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 	}
 	
 	if (type == NX_KEYDOWN) {
-		// we convert our event into plain unicode
 		UniChar characters[2];
 		UniCharCount actualLength;
 		UniCharCount outputLength = 1;
