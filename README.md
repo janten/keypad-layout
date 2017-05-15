@@ -3,7 +3,7 @@ Control window layout using Ctrl + Numeric Keypad on macOS. Press two number key
 
 ![ezgif-1-57056b486e](https://cloud.githubusercontent.com/assets/1794407/23961259/ac928d3c-09aa-11e7-9694-4c995639d254.gif)
 
-## Intallation
+## Installation
 Homebrew users can simply `brew cask install keypad-layout`. Compiled versions are also available for download from [releases](https://github.com/janten/keypad-layout/releases).
 
 ## Examples
