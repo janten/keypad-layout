@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
+@property NSTimer *trustTimer;
 @property NSStatusItem *statusItem;
 @property NSRect rect;
 @end
@@ -17,12 +18,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	NSDictionary *options = @{(__bridge id)kAXTrustedCheckOptionPrompt: @YES};
-	Boolean trusted = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
-
-	if (trusted) {
-		[self installHotkeys];
-	}
-
+	AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
+	[self installHotkeys];
 	[self installStatusBarIcon];
 }
 
@@ -45,11 +42,24 @@
 	self.statusItem.highlightMode = YES;
 }
 
+- (void)trustFun:(NSTimer*) timer {
+    NSDictionary *options = @{(__bridge id)kAXTrustedCheckOptionPrompt: @NO};
+    Boolean trusted = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
+    
+    if (trusted) {
+        CGEventMask interestedEvents = CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged);
+        CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, interestedEvents, hotkeyCallback, (__bridge void * _Nullable)(self));
+        CFRunLoopSourceRef source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
+        [timer invalidate];
+    }
+    
+}
+
 - (void)installHotkeys {
-	CGEventMask interestedEvents = CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged);
-	CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, interestedEvents, hotkeyCallback, (__bridge void * _Nullable)(self));
-	CFRunLoopSourceRef source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
-	CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
+	
+    
+    self.trustTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(trustFun:) userInfo:nil repeats:YES];
 }
 
 CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon) {
@@ -67,7 +77,6 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 	}
 	
 	if (type == NX_KEYDOWN) {
-		// we convert our event into plain unicode
 		UniChar characters[2];
 		UniCharCount actualLength;
 		UniCharCount outputLength = 1;
@@ -158,11 +167,11 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 		return;
 	}
 
-	AXValueRef positionValue = AXValueCreate(kAXValueTypeCGPoint, &frame.origin);
+	AXValueRef positionValue = AXValueCreate(kAXValueCGPointType, &frame.origin);
 	AXUIElementSetAttributeValue(window, kAXPositionAttribute, positionValue);
 	CFRelease(positionValue);
 	
-	AXValueRef sizeValue = AXValueCreate(kAXValueTypeCGSize, &frame.size);
+	AXValueRef sizeValue = AXValueCreate(kAXValueCGSizeType, &frame.size);
 	AXUIElementSetAttributeValue(window, kAXSizeAttribute, sizeValue);
 	CFRelease(sizeValue);
 	

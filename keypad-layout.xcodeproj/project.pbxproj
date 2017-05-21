@@ -102,7 +102,7 @@
 				TargetAttributes = {
 					EE43474C1E78371000ECAADF = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 7KV498VKRZ;
+						DevelopmentTeam = JK6A64P53M;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
@@ -176,6 +176,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -222,6 +223,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -245,11 +247,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 7KV498VKRZ;
+				DEVELOPMENT_TEAM = JK6A64P53M;
 				INFOPLIST_FILE = "keypad-layout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jan-gerd.keypad-layout";
 				PRODUCT_NAME = "Keypad Layout";
+				SDKROOT = macosx10.10;
 			};
 			name = Debug;
 		};
@@ -258,11 +262,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 7KV498VKRZ;
+				DEVELOPMENT_TEAM = JK6A64P53M;
 				INFOPLIST_FILE = "keypad-layout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jan-gerd.keypad-layout";
 				PRODUCT_NAME = "Keypad Layout";
+				SDKROOT = macosx10.10;
 			};
 			name = Release;
 		};
