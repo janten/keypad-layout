@@ -17,10 +17,12 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	NSDictionary *options = @{(__bridge id)kAXTrustedCheckOptionPrompt: @YES};
-	AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
-	[self installHotkeys];
 	[self installStatusBarIcon];
+    self.trustTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                                       target:self
+                                                     selector:@selector(installHotkeys)
+                                                     userInfo:nil
+                                                      repeats:YES];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -43,20 +45,24 @@
 }
 
 - (void)installHotkeys {
-	void (^trustBlock)(NSTimer *) = ^(NSTimer * _Nonnull timer) {
-		NSDictionary *options = @{(__bridge id)kAXTrustedCheckOptionPrompt: @NO};
-		Boolean trusted = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
-
-		if (trusted) {
-			CGEventMask interestedEvents = CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged);
-			CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, interestedEvents, hotkeyCallback, (__bridge void * _Nullable)(self));
-			CFRunLoopSourceRef source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
-			CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
-			[timer invalidate];
-		}
+    static Boolean firstCall;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        firstCall = YES;
+    });
+    
+    NSDictionary *options = @{(__bridge id)kAXTrustedCheckOptionPrompt: @(firstCall)};
+    Boolean trusted = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
+    firstCall = NO;
+    
+    if (trusted) {
+        CGEventMask interestedEvents = CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventFlagsChanged);
+        CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, interestedEvents, hotkeyCallback, (__bridge void * _Nullable)(self));
+        CFRunLoopSourceRef source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
+        [self.trustTimer invalidate];
+    }
 		
-	};
-	self.trustTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:YES block:trustBlock];
 }
 
 CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon) {
