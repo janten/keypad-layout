@@ -31,8 +31,10 @@
 
 - (void)installStatusBarIcon {
 	NSStatusBar *statusBar = [NSStatusBar systemStatusBar];
+	NSString *altInterfaceStyle = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
+	NSString *imageSrc = altInterfaceStyle ? @"StatusBarImageWhite" : @"StatusBarImage";
 	self.statusItem = [statusBar statusItemWithLength:NSSquareStatusItemLength];
-	NSImage *image = [NSImage imageNamed:@"StatusBarImage"];
+	NSImage *image = [NSImage imageNamed:imageSrc];
 	image.size = NSMakeSize(30, 30);
 	self.statusItem.image = image;
 	NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Window Layouts"];
