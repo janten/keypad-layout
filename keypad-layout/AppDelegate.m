@@ -12,12 +12,17 @@
 @property NSTimer *trustTimer;
 @property NSStatusItem *statusItem;
 @property NSRect rect;
+@property NSRect wildcardRect;
 @end
+
+
 
 @implementation AppDelegate
 
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	[self installStatusBarIcon];
+    self.wildcardRect = [self rectFromCenterW:false H:false];
     self.trustTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
                                                        target:self
                                                      selector:@selector(installHotkeys)
@@ -86,7 +91,7 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 		CGEventKeyboardGetUnicodeString(event, outputLength, &actualLength, characters);
 		char chars[2] = {characters[0], 0};
 		
-		if (strstr("123456789", chars)) {
+		if (strstr("0123456789", chars)) {
 			[self handleHotkeyChar:chars[0]];
 			return NULL;
 		}
@@ -161,12 +166,14 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 		case '3':
 			rect = [self rectForCoordinateX:2 Y:2];
 			break;
+        case '0':
+            rect = self.wildcardRect;
 		default:
 			break;
 	}
     
-    if(NSEqualRects(self.rect, rect)) {
-        // The two rectangles are the same, the same button has been preesed twice
+    if(NSEqualRects(self.rect, self.wildcardRect)) {
+        // The first button pressed was 0
         switch (c) {
             case '7':
             case '9':
@@ -174,19 +181,21 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
             case '1':
                 // if the rectangle is one of the corner rectangles it is enough to perform
                 // the union with a small rectangle in the center of the screen
-                rect = [self rectFromCenterW: false H: false];
+                self.rect = [self rectFromCenterW: false H: false];
                 break;
             case '4':
             case '6':
                 // top or bottom center rectangles become a full width centered rectangle
-                rect = [self rectFromCenterW: false H: true];
+                self.rect = [self rectFromCenterW: false H: true];
                 break;
             case '8':
             case '2':
                 // left or right center rectangles become a full height centered rectangle
-                rect = [self rectFromCenterW: true H: false];
+                self.rect = [self rectFromCenterW: true H: false];
                 break;
-                
+            case '5':
+                self.rect = [self rectFromCenterW: true H: true];
+                break;
             default:
                 break;
         }
@@ -194,7 +203,10 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 	
 	if (NSEqualRects(NSZeroRect, self.rect)) {
 		self.rect = rect;
-    }else {
+    } else if(NSEqualRects(self.wildcardRect, rect)){
+        // Zero pressed as second character, just abort the combination
+        self.rect = NSZeroRect;
+    } else{
 		rect = NSUnionRect(self.rect, rect);
 		self.rect = NSZeroRect;
 		[self setFrontmostWindowFrame:rect];
