@@ -15,8 +15,6 @@
 @property NSRect wildcardRect;
 @end
 
-
-
 @implementation AppDelegate
 
 
@@ -172,7 +170,7 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 			break;
 	}
     
-    if(NSEqualRects(self.rect, self.wildcardRect)) {
+    if (NSEqualRects(self.rect, self.wildcardRect)) {
         // The first button pressed was 0
         switch (c) {
             case '7':
@@ -181,20 +179,20 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
             case '1':
                 // if the rectangle is one of the corner rectangles it is enough to perform
                 // the union with a small rectangle in the center of the screen
-                self.rect = [self rectFromCenterW: false H: false];
+                self.rect = [self rectFromCenterW:false H:false];
                 break;
             case '4':
             case '6':
                 // top or bottom center rectangles become a full width centered rectangle
-                self.rect = [self rectFromCenterW: false H: true];
+                self.rect = [self rectFromCenterW:false H:true];
                 break;
             case '8':
             case '2':
                 // left or right center rectangles become a full height centered rectangle
-                self.rect = [self rectFromCenterW: true H: false];
+                self.rect = [self rectFromCenterW:true H:false];
                 break;
             case '5':
-                self.rect = [self rectFromCenterW: true H: true];
+                self.rect = [self rectFromCenterW:true H:true];
                 break;
             default:
                 break;
@@ -203,10 +201,10 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 	
 	if (NSEqualRects(NSZeroRect, self.rect)) {
 		self.rect = rect;
-    } else if(NSEqualRects(self.wildcardRect, rect)){
+    } else if (NSEqualRects(self.wildcardRect, rect)) {
         // Zero pressed as second character, just abort the combination
         self.rect = NSZeroRect;
-    } else{
+    } else {
 		rect = NSUnionRect(self.rect, rect);
 		self.rect = NSZeroRect;
 		[self setFrontmostWindowFrame:rect];
