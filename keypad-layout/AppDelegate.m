@@ -12,12 +12,17 @@
 @property NSTimer *trustTimer;
 @property NSStatusItem *statusItem;
 @property NSRect rect;
+@property NSRect wildcardRect;
 @end
+
+
 
 @implementation AppDelegate
 
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	[self installStatusBarIcon];
+    self.wildcardRect = [self rectFromCenterW:false H:false];
     self.trustTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
                                                        target:self
                                                      selector:@selector(installHotkeys)
@@ -86,7 +91,7 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 		CGEventKeyboardGetUnicodeString(event, outputLength, &actualLength, characters);
 		char chars[2] = {characters[0], 0};
 		
-		if (strstr("123456789", chars)) {
+		if (strstr("0123456789", chars)) {
 			[self handleHotkeyChar:chars[0]];
 			return NULL;
 		}
@@ -112,6 +117,22 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 	rect.origin.y += y * rect.size.height;
 	rect = NSInsetRect(rect, 1, 1);
 	return rect;
+}
+
+// Create a centered rect, if w or h are true, the rect will span the full width or height
+// if they are false the default size will be 1 px
+- (NSRect)rectFromCenterW:(BOOL)w H:(BOOL)h {
+    NSScreen *screen = [NSScreen mainScreen];
+    CGFloat statusBarHeight = [[[NSApplication sharedApplication] mainMenu] menuBarHeight];
+    CGFloat dockHeight = (screen.frame.size.height - screen.visibleFrame.size.height) - statusBarHeight;
+    NSRect rect = screen.frame;
+    rect.origin.x = rect.size.width / 2;
+    rect.size.width = w ? rect.size.width : 1;
+    rect.origin.x -= rect.size.width / 2;
+    rect.origin.y = (rect.size.height - statusBarHeight - dockHeight) / 2 + statusBarHeight;
+    rect.size.height = h ? (rect.size.height - statusBarHeight - dockHeight) : 1;
+    rect.origin.y -= rect.size.height / 2;
+    return rect;
 }
 
 - (void)handleHotkeyChar:(char)c {
@@ -145,13 +166,47 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 		case '3':
 			rect = [self rectForCoordinateX:2 Y:2];
 			break;
+        case '0':
+            rect = self.wildcardRect;
 		default:
 			break;
 	}
+    
+    if(NSEqualRects(self.rect, self.wildcardRect)) {
+        // The first button pressed was 0
+        switch (c) {
+            case '7':
+            case '9':
+            case '3':
+            case '1':
+                // if the rectangle is one of the corner rectangles it is enough to perform
+                // the union with a small rectangle in the center of the screen
+                self.rect = [self rectFromCenterW: false H: false];
+                break;
+            case '4':
+            case '6':
+                // top or bottom center rectangles become a full width centered rectangle
+                self.rect = [self rectFromCenterW: false H: true];
+                break;
+            case '8':
+            case '2':
+                // left or right center rectangles become a full height centered rectangle
+                self.rect = [self rectFromCenterW: true H: false];
+                break;
+            case '5':
+                self.rect = [self rectFromCenterW: true H: true];
+                break;
+            default:
+                break;
+        }
+    }
 	
 	if (NSEqualRects(NSZeroRect, self.rect)) {
 		self.rect = rect;
-	} else {
+    } else if(NSEqualRects(self.wildcardRect, rect)){
+        // Zero pressed as second character, just abort the combination
+        self.rect = NSZeroRect;
+    } else{
 		rect = NSUnionRect(self.rect, rect);
 		self.rect = NSZeroRect;
 		[self setFrontmostWindowFrame:rect];
