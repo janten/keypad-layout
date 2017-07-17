@@ -113,7 +113,6 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 	rect.size.height = rect.size.height / 3.0;
 	rect.origin.x += x * rect.size.width;
 	rect.origin.y += y * rect.size.height;
-	rect = NSInsetRect(rect, 1, 1);
 	return rect;
 }
 
@@ -206,6 +205,7 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
         self.rect = NSZeroRect;
     } else {
 		rect = NSUnionRect(self.rect, rect);
+        rect = NSInsetRect(rect, 1, 1);
 		self.rect = NSZeroRect;
 		[self setFrontmostWindowFrame:rect];
 	}
