@@ -1,7 +1,7 @@
 # Keypad Layout
 Control window layout using Ctrl + Numeric Keypad on macOS. Press two number keys in a row while holding down Ctrl to select the new window frame on a 3x3 grid.
 
-![ezgif-1-57056b486e](https://user-images.githubusercontent.com/1794407/28372885-2d3249f6-6ca1-11e7-95ab-0059ab0bcf1e.gif)
+![out](https://user-images.githubusercontent.com/1794407/28373724-4e3fff4c-6ca3-11e7-958f-7f5ac853da42.gif)
 
 ## Installation
 Homebrew users can simply `brew cask install keypad-layout`. Compiled versions are also available for download from [releases](https://github.com/janten/keypad-layout/releases).
