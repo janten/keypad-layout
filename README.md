@@ -14,6 +14,10 @@ Homebrew users can simply `brew cask install keypad-layout`. Compiled versions a
 | `1` then `3` | Bottom Row       |
 | `3` then `1` | Bottom Row       |
 | `8` then `3` | Right Two Thirds |
+| `0` then `4` | Left Half, Full Height |
+| `0` then `6` | Right Half, Full Height |
+| `0` then `2` | Bottom Half, Full Width |
+| `0` then `8` | Top Half, Full Width |
 
 ## Reference
 If you use a MacBook and forgot the layout of the numeric keypad, refer to the table below for the grid layout.
