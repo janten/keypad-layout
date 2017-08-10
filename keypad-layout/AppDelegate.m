@@ -81,8 +81,11 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 			return event;
 		}
 	}
-	
-	if (type == NX_KEYDOWN) {
+    
+    // Only act if shift key is NOT pressed down, to avoid interfering
+    // with other keyboard shortcuts using the control key (e.g.
+    // shift-ctrl-cmd-4 for grabbing parts of screen).
+	if (type == NX_KEYDOWN && !(flags & kCGEventFlagMaskShift)) {
 		UniChar characters[2];
 		UniCharCount actualLength;
 		UniCharCount outputLength = 1;
