@@ -69,11 +69,11 @@
 }
 
 CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon) {
-    const CGEventFlags ignoredFlags = NX_NUMERICPADMASK | NX_NONCOALSESCEDMASK;
-    const CGEventFlags neededFlags = NX_CONTROLMASK | 0x00000001;
-    CGEventFlags flags = CGEventGetFlags(event) & ~ignoredFlags;
+  const CGEventFlags ignoredFlags = NX_NUMERICPADMASK | NX_NONCOALSESCEDMASK;
+  const CGEventFlags neededFlags = NX_CONTROLMASK | 0x00000001;
+  CGEventFlags flags = CGEventGetFlags(event) & ~ignoredFlags;
 	AppDelegate *self = (__bridge AppDelegate *)refcon;
-    
+
 	if ((type == NX_KEYDOWN) && (flags == neededFlags)) {
 		UniChar characters[2];
 		UniCharCount actualLength;
