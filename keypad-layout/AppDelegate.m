@@ -122,12 +122,10 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
     NSScreen *screen = [NSScreen mainScreen];
     CGFloat statusBarHeight = [[[NSApplication sharedApplication] mainMenu] menuBarHeight];
     CGFloat dockHeight = (screen.frame.size.height - screen.visibleFrame.size.height) - statusBarHeight;
-    NSRect rect = screen.frame;
-    rect.origin.x = rect.size.width / 2;
-    rect.size.width = w ? rect.size.width : 1;
+    NSRect rect = [self rectForCoordinateX:1.5 Y:1.5];
+    rect.size.width = w ? screen.frame.size.width : 1;
     rect.origin.x -= rect.size.width / 2;
-    rect.origin.y = (rect.size.height - statusBarHeight - dockHeight) / 2 + statusBarHeight;
-    rect.size.height = h ? (rect.size.height - statusBarHeight - dockHeight) : 1;
+    rect.size.height = h ? (screen.frame.size.height - statusBarHeight - dockHeight) : 1;
     rect.origin.y -= rect.size.height / 2;
     return rect;
 }
