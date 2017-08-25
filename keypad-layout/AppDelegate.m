@@ -21,11 +21,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	[self installStatusBarIcon];
 	self.wildcardRect = [self rectFromCenterW:false H:false];
-	self.trustTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
-													   target:self
-													 selector:@selector(installHotkeys)
-													 userInfo:nil
-													  repeats:YES];
+	self.trustTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(installHotkeys) userInfo:nil repeats:YES];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -69,9 +65,9 @@
 }
 
 CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon) {
-  const CGEventFlags ignoredFlags = NX_NUMERICPADMASK | NX_NONCOALSESCEDMASK;
-  const CGEventFlags neededFlags = NX_CONTROLMASK | 0x00000001;
-  CGEventFlags flags = CGEventGetFlags(event) & ~ignoredFlags;
+	const CGEventFlags ignoredFlags = NX_NUMERICPADMASK | NX_NONCOALSESCEDMASK;
+	const CGEventFlags neededFlags = NX_CONTROLMASK | 0x00000001;
+	CGEventFlags flags = CGEventGetFlags(event) & ~ignoredFlags;
 	AppDelegate *self = (__bridge AppDelegate *)refcon;
 
 	if ((type == NX_KEYDOWN) && (flags == neededFlags)) {
@@ -86,9 +82,9 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 			return NULL;
 		}
 		
-    }
+	}
 
-    self.rect = NSZeroRect;
+	self.rect = NSZeroRect;
 	return event;
 }
 
