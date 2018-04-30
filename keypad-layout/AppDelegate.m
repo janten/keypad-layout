@@ -93,10 +93,13 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 	NSScreen *screen = [NSScreen mainScreen];
 	CGFloat statusBarHeight = [[[NSApplication sharedApplication] mainMenu] menuBarHeight];
 	CGFloat dockHeight = (screen.frame.size.height - screen.visibleFrame.size.height) - statusBarHeight;
+	CGFloat dockWidth = (screen.frame.size.width - screen.visibleFrame.size.width);
 	NSRect rect = screen.frame;
+	rect.origin.x = screen.visibleFrame.origin.x;
 	rect.origin.y = -screen.frame.origin.y + (primaryScreen.frame.size.height - screen.frame.size.height) ;
 	rect.origin.y += statusBarHeight;
 	rect.size.height -= statusBarHeight + dockHeight;
+	rect.size.width -= dockWidth;
 	rect.size.width = rect.size.width / 3.0;
 	rect.size.height = rect.size.height / 3.0;
 	rect.origin.x += x * rect.size.width;
