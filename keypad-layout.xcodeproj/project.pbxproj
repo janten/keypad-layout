@@ -11,10 +11,12 @@
 		EE4347521E78371100ECAADF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4347511E78371100ECAADF /* AppDelegate.m */; };
 		EE4347551E78371100ECAADF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4347541E78371100ECAADF /* main.m */; };
 		EE43475A1E78371100ECAADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE4347591E78371100ECAADF /* Assets.xcassets */; };
-		EE5F65CB1E799BAB00020AD2 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE5F65CA1E799BAB00020AD2 /* Storyboard.storyboard */; };
+		EE68A39B256406A500DA2731 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE68A39D256406A500DA2731 /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EE21B1F12564077D00899FC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
+		EE21B1F22564078700899FC8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Storyboard.strings; sourceTree = "<group>"; };
 		EE32EB2620975F0100B1ECA1 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		EE43474D1E78371100ECAADF /* Keypad Layout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Keypad Layout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE4347501E78371100ECAADF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -22,7 +24,6 @@
 		EE4347541E78371100ECAADF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EE4347591E78371100ECAADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE43475E1E78371100ECAADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE5F65CA1E799BAB00020AD2 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +70,7 @@
 			children = (
 				EE32EB2620975F0100B1ECA1 /* AppIcon.icns */,
 				EE4347541E78371100ECAADF /* main.m */,
-				EE5F65CA1E799BAB00020AD2 /* Storyboard.storyboard */,
+				EE68A39D256406A500DA2731 /* Storyboard.storyboard */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -100,12 +101,11 @@
 		EE4347451E78371000ECAADF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Jan-Gerd Tenberge";
 				TargetAttributes = {
 					EE43474C1E78371000ECAADF = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 7KV498VKRZ;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
@@ -117,10 +117,11 @@
 			};
 			buildConfigurationList = EE4347481E78371000ECAADF /* Build configuration list for PBXProject "keypad-layout" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				de,
 				Base,
 			);
 			mainGroup = EE4347441E78371000ECAADF;
@@ -139,7 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE43475A1E78371100ECAADF /* Assets.xcassets in Resources */,
-				EE5F65CB1E799BAB00020AD2 /* Storyboard.storyboard in Resources */,
+				EE68A39B256406A500DA2731 /* Storyboard.storyboard in Resources */,
 				EE32EB2720975F0100B1ECA1 /* AppIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,11 +159,24 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		EE68A39D256406A500DA2731 /* Storyboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EE21B1F12564077D00899FC8 /* Base */,
+				EE21B1F22564078700899FC8 /* de */,
+			);
+			name = Storyboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		EE43475F1E78371100ECAADF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -183,6 +197,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -217,6 +232,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -237,6 +253,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -265,9 +282,14 @@
 		EE4347621E78371100ECAADF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 20;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "keypad-layout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jan-gerd.keypad-layout";
 				PRODUCT_NAME = "Keypad Layout";
 			};
@@ -276,9 +298,14 @@
 		EE4347631E78371100ECAADF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 20;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "keypad-layout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jan-gerd.keypad-layout";
 				PRODUCT_NAME = "Keypad Layout";
 			};

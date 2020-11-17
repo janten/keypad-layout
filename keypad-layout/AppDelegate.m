@@ -13,6 +13,7 @@
 @property NSStatusItem *statusItem;
 @property NSRect rect;
 @property NSRect wildcardRect;
+@property (weak) IBOutlet NSMenu *mainMenu;
 @end
 
 @implementation AppDelegate
@@ -28,17 +29,18 @@
 	// Insert code here to tear down your application
 }
 
+- (IBAction)openAboutWindow:(id)sender {
+    [NSApp activateIgnoringOtherApps:YES];
+    [NSApp orderFrontStandardAboutPanel:sender];
+}
+
 - (void)installStatusBarIcon {
 	NSStatusBar *statusBar = [NSStatusBar systemStatusBar];
 	self.statusItem = [statusBar statusItemWithLength:NSSquareStatusItemLength];
 	NSImage *image = [NSImage imageNamed:@"StatusBarImage"];
 	image.size = NSMakeSize(30, 30);
 	self.statusItem.image = image;
-	NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Window Layouts"];
-	NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"Quit Keypad Layout" action:@selector(terminate:) keyEquivalent:@"q"];
-	item.target = [NSApplication sharedApplication];
-	[menu addItem:item];
-	self.statusItem.menu = menu;
+	self.statusItem.menu = self.mainMenu;
 	self.statusItem.enabled = YES;
 	self.statusItem.highlightMode = YES;
 }
@@ -60,6 +62,7 @@
 		CFRunLoopSourceRef source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
 		CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopCommonModes);
 		[self.trustTimer invalidate];
+        CFRelease(source);
 	}
 		
 }

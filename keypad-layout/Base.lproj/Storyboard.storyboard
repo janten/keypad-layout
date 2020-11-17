@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
     </dependencies>
     <scenes>
         <!--Application-->
         <scene sceneID="g0s-VW-JYs">
             <objects>
                 <application id="hZT-tS-H7s" sceneMemberID="viewController">
-                    <menu key="mainMenu" title="Main Menu" systemMenu="main" id="NyE-Vh-wIX">
+                    <menu key="mainMenu" title="Main Menu" systemMenu="main" autoenablesItems="NO" id="NyE-Vh-wIX">
                         <items>
                             <menuItem title="Keypad Layout" id="hxs-Id-5Mk">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -17,21 +17,16 @@
                                     <items>
                                         <menuItem title="About Keypad Layout" id="2Vv-Zl-1y3">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openAboutWindow:" target="N7p-hK-rDf" id="g1E-me-g1N"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="ieN-oU-CP1"/>
-                                        <menuItem title="Services" id="8OC-2X-DKB">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Services" systemMenu="services" id="nIR-HY-kL1"/>
+                                        <menuItem title="Quit Keypad Layout" keyEquivalent="q" id="BJc-00-axC">
+                                            <connections>
+                                                <action selector="terminate:" target="hZT-tS-H7s" id="WM8-jh-w2a"/>
+                                            </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="duG-ig-iQX"/>
-                                        <menuItem title="Hide Others" keyEquivalent="h" id="zAi-Wx-NSR">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                        </menuItem>
-                                        <menuItem title="Show All" id="G0u-I4-ETT">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="Upd-7g-enX"/>
-                                        <menuItem title="Quit Keypad Layout" keyEquivalent="q" id="BJc-00-axC"/>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -155,7 +150,11 @@
                     </connections>
                 </application>
                 <customObject id="UeR-mB-zgv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <customObject id="N7p-hK-rDf" customClass="AppDelegate"/>
+                <customObject id="N7p-hK-rDf" customClass="AppDelegate">
+                    <connections>
+                        <outlet property="mainMenu" destination="tLV-6d-c6l" id="oB9-0V-Xnf"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="-34" y="-416"/>
         </scene>
