@@ -219,13 +219,30 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
         return;
     }
 
-    AXValueRef positionValue = AXValueCreate(kAXValueTypeCGPoint, &frame.origin);
-    AXUIElementSetAttributeValue(window, kAXPositionAttribute, positionValue);
-    CFRelease(positionValue);
+    CFStringRef kAXFrameAttribute = CFSTR("AXFrame");
+    CFArrayRef names = NULL;
+    AXUIElementCopyAttributeNames(window, &names);
 
-    AXValueRef sizeValue = AXValueCreate(kAXValueTypeCGSize, &frame.size);
-    AXUIElementSetAttributeValue(window, kAXSizeAttribute, sizeValue);
-    CFRelease(sizeValue);
+    if (names) {
+        CFRange range = CFRangeMake(0, CFArrayGetCount(names));
+        bool hasFrame = CFArrayContainsValue(names, range, kAXFrameAttribute);
+
+        if (hasFrame) {
+            AXValueRef frameValue = AXValueCreate(kAXValueTypeCGRect, &frame);
+            AXUIElementSetAttributeValue(window, kAXFrameAttribute, frameValue);
+            CFRelease(frameValue);
+        }
+
+        CFRelease(names);
+    } else {
+        AXValueRef positionValue = AXValueCreate(kAXValueTypeCGPoint, &frame.origin);
+        AXUIElementSetAttributeValue(window, kAXPositionAttribute, positionValue);
+        CFRelease(positionValue);
+
+        AXValueRef sizeValue = AXValueCreate(kAXValueTypeCGSize, &frame.size);
+        AXUIElementSetAttributeValue(window, kAXSizeAttribute, sizeValue);
+        CFRelease(sizeValue);
+    }
 
     CFRelease(window);
     CFRelease(appElem);
