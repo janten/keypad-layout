@@ -25,6 +25,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: "Import Certificate: Development"
+        uses: devbotsxyz/xcode-import-certificate@master
+        with:
+          certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
+          certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }
+
       # Build release version
       - name: Xcode Select
         uses: devbotsxyz/xcode-select@v1.1.0
@@ -42,6 +49,7 @@ jobs:
       - name: Xcode Export Archive
         uses: devbotsxyz/xcode-export-archive@v1.0.0
         with:
+          teamID
           # Export method (development, developer-id). Defaults to developer-id.
           export-method: developer-id
           export-path: "Export"
