@@ -282,14 +282,12 @@
 		EE4347621E78371100ECAADF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 21;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 22;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "keypad-layout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jan-gerd.keypad-layout";
 				PRODUCT_NAME = "Keypad Layout";
 			};
@@ -298,14 +296,12 @@
 		EE4347631E78371100ECAADF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 21;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 22;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "keypad-layout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jan-gerd.keypad-layout";
 				PRODUCT_NAME = "Keypad Layout";
 			};
