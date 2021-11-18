@@ -101,7 +101,7 @@
 		EE4347451E78371000ECAADF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = "Jan-Gerd Tenberge";
 				TargetAttributes = {
 					EE43474C1E78371000ECAADF = {
@@ -282,12 +282,13 @@
 		EE4347621E78371100ECAADF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 27;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "keypad-layout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jan-gerd.keypad-layout";
 				PRODUCT_NAME = "Keypad Layout";
 			};
@@ -296,12 +297,13 @@
 		EE4347631E78371100ECAADF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 27;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "keypad-layout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jan-gerd.keypad-layout";
 				PRODUCT_NAME = "Keypad Layout";
 			};

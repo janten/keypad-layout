@@ -211,37 +211,41 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
 - (void)setFrontmostWindowFrame:(CGRect)frame {
     NSRunningApplication *app = [[NSWorkspace sharedWorkspace] frontmostApplication];
     pid_t pid = [app processIdentifier];
-    AXUIElementRef appElem = AXUIElementCreateApplication(pid);
+    AXUIElementRef application = AXUIElementCreateApplication(pid);
     AXUIElementRef window = NULL;
 
-    if (AXUIElementCopyAttributeValue(appElem, kAXFocusedWindowAttribute, (CFTypeRef *)&window) != kAXErrorSuccess) {
-        CFRelease(appElem);
+    if (AXUIElementCopyAttributeValue(application, kAXFocusedWindowAttribute, (CFTypeRef *)&window) !=
+        kAXErrorSuccess) {
+        CFRelease(application);
         return;
     }
 
-    Boolean canSetFrame = false;
-    CFStringRef kAXFrameAttribute = CFSTR("AXFrame");
-    AXUIElementIsAttributeSettable(window, kAXFrameAttribute, &canSetFrame);
+    CFBooleanRef hasEnhancedUserInterface = kCFBooleanFalse;
+    CFStringRef kAXEnhancedUserInterfaceAttribute = CFSTR("AXEnhancedUserInterface");
+    AXUIElementCopyAttributeValue(application, kAXEnhancedUserInterfaceAttribute,
+                                  (CFTypeRef *)&hasEnhancedUserInterface);
 
-    if (canSetFrame) {
+    if (hasEnhancedUserInterface) {
+        AXUIElementSetAttributeValue(application, kAXEnhancedUserInterfaceAttribute, kCFBooleanFalse);
+    }
+
+    // FIXME: Big Sur starts an animation for the first call and ignores the second one if the animation does not
+    // finish soon enough.
+    AXValueRef sizeValue = AXValueCreate(kAXValueTypeCGSize, &frame.size);
+    AXError error = AXUIElementSetAttributeValue(window, kAXSizeAttribute, sizeValue);
+    CFRelease(sizeValue);
+
+    AXValueRef positionValue = AXValueCreate(kAXValueTypeCGPoint, &frame.origin);
+    error = AXUIElementSetAttributeValue(window, kAXPositionAttribute, positionValue);
+    CFRelease(positionValue);
+
+    if (hasEnhancedUserInterface) {
         // Should macOS ever allow us to set origin and size in one call, this should work.
-        AXValueRef frameValue = AXValueCreate(kAXValueTypeCGRect, &frame);
-        AXUIElementSetAttributeValue(window, kAXFrameAttribute, frameValue);
-        CFRelease(frameValue);
-    } else {
-        // FIXME: Big Sur starts an animation for the first call and ignores the second one if the animation does not
-        // finish soon enough.
-        AXValueRef sizeValue = AXValueCreate(kAXValueTypeCGSize, &frame.size);
-        AXError error = AXUIElementSetAttributeValue(window, kAXSizeAttribute, sizeValue);
-        CFRelease(sizeValue);
-
-        AXValueRef positionValue = AXValueCreate(kAXValueTypeCGPoint, &frame.origin);
-        error = AXUIElementSetAttributeValue(window, kAXPositionAttribute, positionValue);
-        CFRelease(positionValue);
+        AXUIElementSetAttributeValue(application, kAXEnhancedUserInterfaceAttribute, kCFBooleanTrue);
     }
 
     CFRelease(window);
-    CFRelease(appElem);
+    CFRelease(application);
 }
 
 @end
