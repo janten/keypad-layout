@@ -229,8 +229,6 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
         AXUIElementSetAttributeValue(application, kAXEnhancedUserInterfaceAttribute, kCFBooleanFalse);
     }
 
-    // FIXME: Big Sur starts an animation for the first call and ignores the second one if the animation does not
-    // finish soon enough.
     AXValueRef sizeValue = AXValueCreate(kAXValueTypeCGSize, &frame.size);
     AXError error = AXUIElementSetAttributeValue(window, kAXSizeAttribute, sizeValue);
     CFRelease(sizeValue);
