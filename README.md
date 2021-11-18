@@ -4,7 +4,7 @@ Control window layout using Ctrl + Numeric Keypad on macOS. Press two number key
 ![out](https://user-images.githubusercontent.com/1794407/28373724-4e3fff4c-6ca3-11e7-958f-7f5ac853da42.gif)
 
 ## Installation
-Homebrew users can simply `brew install --no-quarantine keypad-layout`. Compiled versions are also available for download from [releases](https://github.com/janten/keypad-layout/releases).
+Homebrew users can simply `brew install keypad-layout`. Compiled versions are also available for download from [releases](https://github.com/janten/keypad-layout/releases).
 
 ## Examples
 | `Ctrl` +     | Result           |
