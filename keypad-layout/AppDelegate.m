@@ -229,14 +229,14 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
         AXUIElementSetAttributeValue(application, kAXEnhancedUserInterfaceAttribute, kCFBooleanFalse);
     }
 
-    AXValueRef sizeValue = AXValueCreate(kAXValueTypeCGSize, &frame.size);
-    AXError error = AXUIElementSetAttributeValue(window, kAXSizeAttribute, sizeValue);
-    CFRelease(sizeValue);
-
     AXValueRef positionValue = AXValueCreate(kAXValueTypeCGPoint, &frame.origin);
-    error = AXUIElementSetAttributeValue(window, kAXPositionAttribute, positionValue);
+    AXError error = AXUIElementSetAttributeValue(window, kAXPositionAttribute, positionValue);
     CFRelease(positionValue);
 
+    AXValueRef sizeValue = AXValueCreate(kAXValueTypeCGSize, &frame.size);
+    error = AXUIElementSetAttributeValue(window, kAXSizeAttribute, sizeValue);
+    CFRelease(sizeValue);
+    
     if (hasEnhancedUserInterface) {
         // Should macOS ever allow us to set origin and size in one call, this should work.
         AXUIElementSetAttributeValue(application, kAXEnhancedUserInterfaceAttribute, kCFBooleanTrue);
