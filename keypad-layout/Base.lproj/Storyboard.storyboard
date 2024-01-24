@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -15,13 +15,19 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Keypad Layout" systemMenu="apple" id="tLV-6d-c6l">
                                     <items>
+                                        <menuItem title="Increase Padding" state="on" enabled="NO" id="ach-IB-l7C">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="N7p-hK-rDf" name="value" keyPath="self.addPadding" id="PB1-LW-TPr"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="About Keypad Layout" id="2Vv-Zl-1y3">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openAboutWindow:" target="N7p-hK-rDf" id="g1E-me-g1N"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="ieN-oU-CP1"/>
+                                        <menuItem isSeparatorItem="YES" id="Kns-PI-9LH"/>
                                         <menuItem title="Quit Keypad Layout" keyEquivalent="q" id="BJc-00-axC">
                                             <connections>
                                                 <action selector="terminate:" target="hZT-tS-H7s" id="WM8-jh-w2a"/>
@@ -155,6 +161,7 @@
                         <outlet property="mainMenu" destination="tLV-6d-c6l" id="oB9-0V-Xnf"/>
                     </connections>
                 </customObject>
+                <userDefaultsController representsSharedInstance="YES" id="A5f-1h-S72"/>
             </objects>
             <point key="canvasLocation" x="-34" y="-416"/>
         </scene>

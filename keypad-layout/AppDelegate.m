@@ -14,6 +14,7 @@
 @property NSRect rect;
 @property NSRect wildcardRect;
 @property(weak) IBOutlet NSMenu *mainMenu;
+@property Boolean addPadding;
 @end
 
 @implementation AppDelegate
@@ -26,6 +27,10 @@
                                                      selector:@selector(installHotkeys)
                                                      userInfo:nil
                                                       repeats:YES];
+    [self bind:@"addPadding"
+      toObject:[NSUserDefaultsController sharedUserDefaultsController]
+   withKeyPath:@"values.addPadding"
+       options:@{@"NSContinuouslyUpdatesValue": @YES}];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -202,7 +207,8 @@ CGEventRef hotkeyCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
         self.rect = NSZeroRect;
     } else {
         rect = NSUnionRect(self.rect, rect);
-        rect = NSInsetRect(rect, 1, 1);
+        CGFloat inset = self.addPadding ? 5.0 : 1.0;
+        rect = NSInsetRect(rect, inset, inset);
         self.rect = NSZeroRect;
         [self setFrontmostWindowFrame:rect];
     }
